@@ -1,11 +1,9 @@
 import { Router, Request, Response } from 'express';
-import { trace, SpanStatusCode } from '@opentelemetry/api';
 import { generateCv, VALID_ROLE_IDS } from '../core/generateCv';
 import { generateCoverLetter } from '../core/generateCoverLetter';
 import { GenerationPayload } from '../types/GenerationPayload';
 
 const router = Router();
-const tracer = trace.getTracer('jobvault-generation-service');
 
 function validateCvPayload(payload: GenerationPayload): string | null {
   if (!payload.headline?.trim()) return 'headline is required';
@@ -43,7 +41,6 @@ router.get('/health', (_req: Request, res: Response) => {
 });
 
 router.post('/api/generate-cv', (req: Request, res: Response) => {
-  const span = tracer.startSpan('generate-cv');
   try {
     const payload = req.body as GenerationPayload;
 
@@ -61,15 +58,11 @@ router.post('/api/generate-cv', (req: Request, res: Response) => {
     });
     res.send(docBuffer);
   } catch (err) {
-    span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
     res.status(500).json({ error: 'CV generation failed', detail: String(err) });
-  } finally {
-    span.end();
   }
 });
 
 router.post('/api/generate-cover-letter', (req: Request, res: Response) => {
-  const span = tracer.startSpan('generate-cover-letter');
   try {
     const payload = req.body as GenerationPayload;
 
@@ -87,10 +80,7 @@ router.post('/api/generate-cover-letter', (req: Request, res: Response) => {
     });
     res.send(docBuffer);
   } catch (err) {
-    span.setStatus({ code: SpanStatusCode.ERROR, message: String(err) });
     res.status(500).json({ error: 'Cover letter generation failed', detail: String(err) });
-  } finally {
-    span.end();
   }
 });
 

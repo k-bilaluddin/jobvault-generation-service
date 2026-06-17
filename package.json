@@ -12,12 +12,6 @@
     "build:templates": "node scripts/build-cv-template.js && node scripts/build-cl-template.js"
   },
   "dependencies": {
-    "@opentelemetry/api": "^1.9.0",
-    "@opentelemetry/auto-instrumentations-node": "^0.57.0",
-    "@opentelemetry/exporter-trace-otlp-http": "^0.57.0",
-    "@opentelemetry/resources": "^1.30.0",
-    "@opentelemetry/sdk-node": "^0.57.0",
-    "@opentelemetry/semantic-conventions": "^1.28.0",
     "adm-zip": "^0.5.17",
     "docx": "^9.7.1",
     "docxtemplater": "^3.59.0",
