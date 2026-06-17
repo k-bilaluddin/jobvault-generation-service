@@ -7,6 +7,8 @@ import { processBoldMarkdown } from './boldMarkdown';
 
 const TEMPLATE_PATH = path.resolve(__dirname, '../../templates/cv_template.docx');
 
+export const VALID_ROLE_IDS = ['calvergy', 'senior_baris', 'developer_baris', 'junior_baris'] as const;
+
 export function generateCv(payload: GenerationPayload): Buffer {
   const templateBuf = fs.readFileSync(TEMPLATE_PATH);
   const zip = new PizZip(templateBuf);
