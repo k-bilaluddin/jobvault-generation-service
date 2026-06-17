@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  generation-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobvault-generation-service
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+    networks:
+      - jobvault-internal
+    expose:
+      - "3000"
+
+networks:
+  jobvault-internal:
+    external: true
