@@ -8,8 +8,8 @@
  */
 export function processBoldMarkdown(xml: string): string {
   return xml.replace(
-    /<w:r>((?:<w:rPr>[\s\S]*?<\/w:rPr>)?)<w:t(?:[^>]*)>([\s\S]*?)<\/w:t><\/w:r>/g,
-    (match, rPrBlock: string, text: string) => {
+    /<w:r([^>]*)>((?:<w:rPr>[\s\S]*?<\/w:rPr>)?)<w:t(?:[^>]*)>([\s\S]*?)<\/w:t><\/w:r>/g,
+    (match, rAttrs: string, rPrBlock: string, text: string) => {
       if (!text.includes('**')) return match;
 
       const boldRPr = rPrBlock
@@ -23,7 +23,7 @@ export function processBoldMarkdown(xml: string): string {
         .map((part, i) => {
           if (!part) return '';
           const pr = i % 2 === 1 ? boldRPr : rPrBlock;
-          return `<w:r>${pr}<w:t xml:space="preserve">${part}</w:t></w:r>`;
+          return `<w:r${rAttrs}>${pr}<w:t xml:space="preserve">${part}</w:t></w:r>`;
         })
         .join('');
     },
