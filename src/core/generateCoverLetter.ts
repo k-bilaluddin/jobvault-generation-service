@@ -3,6 +3,7 @@ import path from 'path';
 import PizZip from 'pizzip';
 import Docxtemplater from 'docxtemplater';
 import { GenerationPayload } from '../types/GenerationPayload';
+import { processBoldMarkdown } from './boldMarkdown';
 
 const TEMPLATE_PATH = path.resolve(__dirname, '../../templates/cl_template.docx');
 
@@ -27,5 +28,8 @@ export function generateCoverLetter(payload: GenerationPayload): Buffer {
     paragraphs: payload.coverLetterParagraphs.map((text) => ({ text })),
   });
 
-  return doc.getZip().generate({ type: 'nodebuffer', compression: 'DEFLATE' });
+  const renderedZip = doc.getZip();
+  const docXml = renderedZip.file('word/document.xml')!.asText();
+  renderedZip.file('word/document.xml', processBoldMarkdown(docXml));
+  return renderedZip.generate({ type: 'nodebuffer', compression: 'DEFLATE' });
 }
