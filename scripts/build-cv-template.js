@@ -291,9 +291,10 @@ const doc = new Document({
       projectTitle("GlobalPost Admin & Shipper Portals", "https://portal.goglobalpost.com/login"),
       projectBullet("Developed with React.js + .NET 8, serving 3M+ internal shippers with JWT-secured, role-based access control"),
 
-      projectTitle("JobVault – Job Application Tracking Platform", null),
-      projectBullet("Architected and built a self-hosted job-application management platform using .NET 9, Vue 3, MongoDB, and RabbitMQ, deployed via Cloudflare Tunnel"),
-      projectBullet("Designed an event-driven backend using RabbitMQ and GitHub webhook ingestion to automatically capture, store, and version application documents committed to a private repository"),
+      projectTitle("JobVault – AI-Driven Job Application Platform", null),
+      projectBullet("Architected a self-hosted platform (.NET 9, Vue 3, MongoDB) where a Claude-powered agent evaluates job postings and selects real experience from a curated bullet library to generate tailored CVs and cover letters, removing manual tailoring and constraining generation against hallucinated experience"),
+      projectBullet("Built an event-driven pipeline (RabbitMQ, Worker service) that generates DOCX/PDF documents and commits them atomically to a GitHub-based document vault via the Git Trees API, with dead-letter retry handling"),
+      projectBullet("Deployed via a full GitHub Actions CI/CD pipeline and Cloudflare Tunnel, achieving 11ms average API response time at 0% error rate under load testing (k6)"),
       spacer(100),
 
       // ── CERTIFICATIONS ────────────────────────────────────────────
