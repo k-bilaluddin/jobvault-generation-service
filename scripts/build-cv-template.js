@@ -299,7 +299,7 @@ const doc = new Document({
 
       // ── CERTIFICATIONS ────────────────────────────────────────────
       sectionHeading("Certifications & Achievements"),
-      certBullet("AZ-204: Developing Solutions for Microsoft Azure – In Progress"),
+      certBullet("AI-200: Azure AI Cloud Developer Associate – In Progress"),
       certBullet("Represented Bari’s Technology Solutions at GITEX GLOBAL 2023, Dubai – resulting in 5 qualified leads"),
       certBullet("Recognised as ‘Reliability Maestro’ for delivering 100% on time and resolving critical issues under pressure"),
       spacer(100),
