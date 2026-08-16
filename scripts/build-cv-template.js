@@ -4,14 +4,15 @@
  *
  * What is FIXED in the template (never changes per JD):
  *   - Name, contact info, links
- *   - Role titles, company names, locations, dates for all 4 roles
+ *   - Role titles, company names, locations, dates for all 5 roles
+ *   - Independent Software Engineer role (title, dates, AND bullets — fully static, no loop tag)
  *   - Education, Projects, Certifications, Languages
  *
  * What is DYNAMIC (filled at generation time):
  *   - {headline}            — subtitle line under name
  *   - {summary}             — professional summary paragraph
  *   - {#skills}{label}{value}{/skills}  — skills table rows (order & content vary per JD)
- *   - Per-role bullet loops (4 roles, each with its own loop tag):
+ *   - Per-role bullet loops (4 employer roles, each with its own loop tag):
  *       {#calvergy_bullets}{text}{/calvergy_bullets}
  *       {#senior_baris_bullets}{text}{/senior_baris_bullets}
  *       {#developer_baris_bullets}{text}{/developer_baris_bullets}
@@ -249,6 +250,14 @@ const doc = new Document({
       // Role headers/company/dates are FIXED. Only bullets are dynamic.
       sectionHeading("Work Experience"),
 
+      // Role 0: Independent / JobVault (FIXED — title, dates, and bullets never change)
+      roleHeader("Independent Software Engineer / Product Development", "01/2026 – Present"),
+      companyLine("Self-Employed", "Remote"),
+      projectBullet("Architected and built JobVault, a self-hosted AI-driven job application platform (.NET 9, Vue 3, MongoDB) where a Claude-powered agent evaluates job postings and generates tailored CVs/cover letters from a curated experience library"),
+      projectBullet("Built an event-driven pipeline (RabbitMQ, Worker service) generating DOCX/PDF documents and committing them atomically to a GitHub-based document vault via the Git Trees API, with dead-letter retry handling"),
+      projectBullet("Deployed via GitHub Actions CI/CD and Cloudflare Tunnel, sustaining 11ms average response time at 0% error rate under load testing"),
+      spacer(80),
+
       // Role 1: Calvergy
       roleHeader("Software Engineer", "10/2025 – 01/2026"),
       companyLine("Calvergy UG", "Aachen, Germany – Remote"),
@@ -291,10 +300,6 @@ const doc = new Document({
       projectTitle("GlobalPost Admin & Shipper Portals", "https://portal.goglobalpost.com/login"),
       projectBullet("Developed with React.js + .NET 8, serving 3M+ internal shippers with JWT-secured, role-based access control"),
 
-      projectTitle("JobVault – AI-Driven Job Application Platform", "https://github.com/k-bilaluddin/jobvault"),
-      projectBullet("Architected a self-hosted platform (.NET 9, Vue 3, MongoDB) where a Claude-powered agent evaluates job postings and selects real experience from a curated bullet library to generate tailored CVs and cover letters, removing manual tailoring and constraining generation against hallucinated experience"),
-      projectBullet("Built an event-driven pipeline (RabbitMQ, Worker service) that generates DOCX/PDF documents and commits them atomically to a GitHub-based document vault via the Git Trees API, with dead-letter retry handling"),
-      projectBullet("Deployed via a full GitHub Actions CI/CD pipeline and Cloudflare Tunnel, sustaining 11ms average response time at 0% error rate under Postman-based load testing (20 virtual users, 2,000 requests)"),
       spacer(100),
 
       // ── CERTIFICATIONS ────────────────────────────────────────────
