@@ -10,14 +10,15 @@ The Worker Service sends a JSON payload describing the tailored content for a sp
 
 **What is fixed in every document (hardcoded in the template):**
 - Name, contact details, LinkedIn, GitHub
-- All 4 role headers: title, company, location, dates
+- All 5 role headers: title, company, location, dates
+- The Independent Software Engineer / JobVault role — title, dates, *and* bullets are fully static (not tailored per JD)
 - Education, Projects, Certifications, Languages
 
 **What varies per job application (comes from the payload):**
 - Headline (subtitle line under the name)
 - Professional summary
 - Skills table (rows and order adjusted per JD)
-- Bullet points under each role
+- Bullet points under each of the 4 employer roles (Calvergy, Bari's × 3)
 - Cover letter paragraphs
 
 ---
