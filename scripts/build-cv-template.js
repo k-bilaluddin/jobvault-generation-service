@@ -4,9 +4,9 @@
  *
  * What is FIXED in the template (never changes per JD):
  *   - Name, contact info, links
- *   - Role titles, company names, locations, dates for all 5 roles
- *   - Independent Software Engineer role (title, dates, AND bullets — fully static, no loop tag)
- *   - Education, Projects, Certifications, Languages
+ *   - Role titles, company names, locations, dates for all 4 employer roles
+ *   - Additional Employment role (title, dates, company — fully static, no bullets)
+ *   - Education, Current Projects (JobVault, Demand Forecasting), Certifications, Languages
  *
  * What is DYNAMIC (filled at generation time):
  *   - {headline}            — subtitle line under name
@@ -135,11 +135,17 @@ function skillsTable() {
   });
 }
 
-function projectTitle(title, url) {
-  const run = new TextRun({ text: title, bold: true, size: 20, font: FONT, color: BLUE_ROLE, underline: { type: UnderlineType.SINGLE } });
+function projectTitle(title) {
   return new Paragraph({
-    spacing: { before: 100, after: 20 }, keepNext: true,
-    children: url ? [new ExternalHyperlink({ link: url, children: [run] })] : [run]
+    spacing: { before: 100, after: 0 }, keepNext: true,
+    children: [new TextRun({ text: title, bold: true, size: 20, font: FONT, color: BLUE_ROLE })]
+  });
+}
+
+function projectSubtitle(text) {
+  return new Paragraph({
+    spacing: { before: 0, after: 20 }, keepNext: true,
+    children: [new TextRun({ text, italics: true, size: 18, font: FONT, color: MID })]
   });
 }
 
@@ -215,7 +221,7 @@ const doc = new Document({
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER, spacing: { before: 0, after: 20 },
-        children: [new TextRun({ text: "Raunheim, Germany  |  +49 1521 5678891  |  mbilaluddin1994@gmail.com", size: 20, font: FONT, color: MID })]
+        children: [new TextRun({ text: "Germany  |  +49 1521 5678891  |  mbilaluddin1994@gmail.com", size: 20, font: FONT, color: MID })]
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 },
@@ -250,16 +256,8 @@ const doc = new Document({
       // Role headers/company/dates are FIXED. Only bullets are dynamic.
       sectionHeading("Work Experience"),
 
-      // Role 0: Independent / JobVault (FIXED — title, dates, and bullets never change)
-      roleHeader("Independent Software Engineer / Product Development", "01/2026 – Present"),
-      companyLine("Self-Employed", "Remote"),
-      projectBullet("Architected and built JobVault, a self-hosted AI-driven job application platform (.NET 9, Vue 3, MongoDB) where a Claude-powered agent evaluates job postings and generates tailored CVs/cover letters from a curated experience library"),
-      projectBullet("Built an event-driven pipeline (RabbitMQ, Worker service) generating DOCX/PDF documents and committing them atomically to a GitHub-based document vault via the Git Trees API, with dead-letter retry handling"),
-      projectBullet("Deployed via GitHub Actions CI/CD and Cloudflare Tunnel, sustaining 11ms average response time at 0% error rate under load testing"),
-      spacer(80),
-
-      // Role 1: Calvergy
-      roleHeader("Software Engineer", "10/2025 – 01/2026"),
+      // Role 1: Calvergy (intern)
+      roleHeader("Software Engineer (Intern)", "10/2025 – 01/2026"),
       companyLine("Calvergy UG", "Aachen, Germany – Remote"),
       ...roleBulletLoop("{#calvergy_bullets}", "{/calvergy_bullets}"),
       spacer(80),
@@ -282,36 +280,44 @@ const doc = new Document({
       ...roleBulletLoop("{#junior_baris_bullets}", "{/junior_baris_bullets}"),
       spacer(100),
 
+      // ── CURRENT PROJECTS ─────────────────────────────────────────
+      // Fully fixed — personal projects, independent of JD.
+      sectionHeading("Current Projects"),
+
+      projectTitle("JobVault – AI-Assisted Job Application Platform"),
+      projectSubtitle(".NET 9 • Vue 3 • MongoDB • RabbitMQ • Docker • GitHub Actions"),
+      projectBullet("Built an end-to-end platform that evaluates job descriptions against a curated evidence library and generates tailored application documents using AI-assisted workflows"),
+      projectBullet("Designed an event-driven processing pipeline with RabbitMQ and background workers, with containerized deployment and automated CI/CD; planned for public open-source release"),
+
+      projectTitle("Demand Forecasting System"),
+      projectSubtitle("Python · Machine Learning · Forecasting"),
+      projectBullet("Developing a demand-forecasting solution using historical datasets, including external training data, to train and evaluate predictive models for future demand"),
+
+      spacer(100),
+
+      // ── ADDITIONAL EMPLOYMENT ─────────────────────────────────────
+      // Fixed — concurrent part-time role, no bullets.
+      sectionHeading("Additional Employment"),
+      roleHeader("Part-Time Employee", "04/2025 – Present"),
+      companyLine("MyLogistics GmbH", "Raunheim, Germany"),
+      spacer(100),
+
       // ── EDUCATION ─────────────────────────────────────────────────
       sectionHeading("Education"),
       eduLine("MSCS", "Computer Science", "Bahria University, Karachi", "03/2021 – 01/2023"),
       eduLine("BSCS", "Computer Science", "Bahria University, Karachi", "02/2015 – 01/2019"),
       spacer(100),
 
-      // ── PROJECTS ──────────────────────────────────────────────────
-      sectionHeading("Notable Projects"),
-
-      projectTitle("GlobalPost Multi-Leg Shipping Consolidator", "https://dev.goglobalpost.com"),
-      projectBullet("Architected and built the full REST API suite on .NET 8 microservices processing 3B+ annual orders across multi-carrier flows (USPS, DHL, DPD, UPS, FedEx), serving 3M+ active shippers"),
-
-      projectTitle("GlobalPost Shipment Tracking System", "https://www.goglobalpost.com/tracking/"),
-      projectBullet("High-throughput tracking engine handling millions of daily transactions, leveraging Redis caching, DynamoDB, and multi-source data aggregation"),
-
-      projectTitle("GlobalPost Admin & Shipper Portals", "https://portal.goglobalpost.com/login"),
-      projectBullet("Developed with React.js + .NET 8, serving 3M+ internal shippers with JWT-secured, role-based access control"),
-
-      spacer(100),
-
       // ── CERTIFICATIONS ────────────────────────────────────────────
       sectionHeading("Certifications & Achievements"),
       certBullet("AI-200: Azure AI Cloud Developer Associate – In Progress"),
-      certBullet("Represented Bari’s Technology Solutions at GITEX GLOBAL 2023, Dubai – resulting in 5 qualified leads"),
-      certBullet("Recognised as ‘Reliability Maestro’ for delivering 100% on time and resolving critical issues under pressure"),
+      certBullet("Represented Bari’s Technology Solutions at GITEX GLOBAL 2023, Dubai"),
+      certBullet("Recognised internally as “Reliability Maestro” for dependable delivery and resolving critical issues under pressure"),
       spacer(100),
 
       // ── LANGUAGES ─────────────────────────────────────────────────
       sectionHeading("Languages"),
-      certBullet("English – C1 Advanced (IELTS 7.0)"),
+      certBullet("English – C1 Advanced (IELTS)"),
       certBullet("German – B1 in Progress"),
     ]
   }]
