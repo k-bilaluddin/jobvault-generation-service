@@ -10,9 +10,9 @@ The Worker Service sends a JSON payload describing the tailored content for a sp
 
 **What is fixed in every document (hardcoded in the template):**
 - Name, contact details, LinkedIn, GitHub
-- All 5 role headers: title, company, location, dates
-- The Independent Software Engineer / JobVault role — title, dates, *and* bullets are fully static (not tailored per JD)
-- Education, Projects, Certifications, Languages
+- All 4 employer role headers: title, company, location, dates
+- The Additional Employment role (MyLogistics GmbH, part-time) — title, dates, and company are fully static, no bullets
+- Education, Current Projects (JobVault, Demand Forecasting System), Certifications, Languages
 
 **What varies per job application (comes from the payload):**
 - Headline (subtitle line under the name)
@@ -85,7 +85,7 @@ Both endpoints accept the same JSON payload shape and return:
 
 | ID | Role |
 |---|---|
-| `calvergy` | Software Engineer — Calvergy UG |
+| `calvergy` | Software Engineer (Intern) — Calvergy UG |
 | `senior_baris` | Senior Software Developer — Bari's Technology Solutions |
 | `developer_baris` | Software Developer — Bari's Technology Solutions |
 | `junior_baris` | Junior Software Developer — Bari's Technology Solutions |
